@@ -4,7 +4,6 @@ import click
 from flask import current_app, g
 
 def init_app(app):
-    print("starting db")
     app.teardown_appcontext(close_db)
     app.cli.add_command(init_db_command)
     
@@ -12,8 +11,7 @@ def init_app(app):
 def get_db():
     if 'db' not in g:
         g.db = sqlite3.connect(
-            #current_app.config['DATABASE'],
-            "Blog.db",
+            current_app.config['DATABASE'],
             detect_types=sqlite3.PARSE_DECLTYPES
         )
         g.db.row_factory = sqlite3.Row
